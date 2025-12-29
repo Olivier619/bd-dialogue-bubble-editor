@@ -250,8 +250,7 @@ export async function drawRichText(
                             height: seg.style.fontSize
                         });
                         currentLine.width += chunkWidth;
-                        const lhFactor = seg.style.fontSize <= 15 ? 0.70 : Math.max(0.50, 0.70 - (seg.style.fontSize - 15) * 0.008);
-                        currentLine.height = Math.max(currentLine.height, seg.style.fontSize * lhFactor);
+                        currentLine.height = Math.max(currentLine.height, seg.style.fontSize * 1.4);
 
                         remainingWord = remainingWord.substring(chunk.length);
                     } else {
@@ -274,8 +273,7 @@ export async function drawRichText(
                     height: seg.style.fontSize
                 });
                 currentLine.width += wordWidth;
-                const lhFactor = seg.style.fontSize <= 15 ? 0.70 : Math.max(0.50, 0.70 - (seg.style.fontSize - 15) * 0.008);
-                currentLine.height = Math.max(currentLine.height, seg.style.fontSize * lhFactor);
+                currentLine.height = Math.max(currentLine.height, seg.style.fontSize * 1.4);
             }
         });
     });
