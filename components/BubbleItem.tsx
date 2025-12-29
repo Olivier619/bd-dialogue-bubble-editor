@@ -215,28 +215,6 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
     }
   }, [isSelected, isEditingText, bubble, onUpdate]);
 
-    // Auto-ajustement du texte pour éviter les débordements
-  useEffect(() => {
-    const textDiv = textEditRef.current;
-    if (!textDiv || isEditingText) return;
-
-    const fontFamily = FONT_FAMILY_MAP[bubble.fontFamily];
-    const plainText = textDiv.innerHTML.replace(/<[^>]*>/g, '');
-    
-    // Détecter si le texte déborde
-    const bounds = getTextBounds(bubble);
-    
-    // Mesurer le texte actuel
-    const lineHeight = bubble.fontSize * 1.4;
-    const estimatedLines = Math.ceil(textDiv.scrollHeight / lineHeight);
-    const estimatedHeight = estimatedLines * lineHeight;
-    
-    // Si le texte déborde en hauteur, réduire la taille de police
-    if (estimatedHeight > bounds.height && bubble.fontSize > 8) {
-      const newFontSize = Math.max(8, bubble.fontSize - 1);
-      onUpdate({ ...bubble, fontSize: newFontSize });
-    }
-  }, [bubble.text, bubble.fontSize, bubble.width, bubble.height, bubble.type, isEditingText, onUpdate]);
 
   useEffect(() => {
     const textDiv = textEditRef.current;
@@ -561,6 +539,11 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
     zIndex: bubble.zIndex,
     fontFamily: FONT_FAMILY_MAP[bubble.fontFamily],
     fontSize: `${bubble.fontSize}px`,
+        // Calculer les paddings dynamiques en fonction du type de bulle
+    const safeZone = SAFE_TEXT_ZONES[bubble.type] || { widthFactor: 0.80, heightFactor: 0.75 };
+    const paddingH = ((1 - safeZone.widthFactor) / 2) * 100;
+    const paddingV = ((1 - safeZone.heightFactor) / 2) * 100;
+
     color: bubble.textColor,
     border: isSelected ? '2px solid #3b82f6' : '2px solid transparent',
     boxSizing: 'content-box',
@@ -577,7 +560,7 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
     left: 0,
     width: '100%',
     height: '100%',
-    padding: '10px',
+    padding: `${paddingV}% ${paddingH}%`,
     cursor: isEditingText ? 'text' : 'move',
     textAlign: 'center',
   };
