@@ -347,9 +347,9 @@ const App: React.FC = () => {
       let textWidth = width;
       let textHeight = height;
 
-      // Constrain text area for irregular shapes
+      // Constrain text area for irregular shapes (tighter to stay in white area)
       if (type === BubbleType.Shout || type === BubbleType.Thought) {
-        const factor = 0.75;
+        const factor = 0.60; // Reduced from 0.75 to ensure text stays inside
         textWidth = width * factor;
         textHeight = height * factor;
         textX = (width - textWidth) / 2;
