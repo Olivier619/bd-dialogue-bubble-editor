@@ -19,8 +19,7 @@ const App: React.FC = () => {
     defaultTailBaseWidth: 20,
     defaultDotCount: 4,
     defaultDotSize: 15,
-    uiMode: 'light',
-    timeOfDay: 'day',
+
   });
   const [isSaving, setIsSaving] = useState(false);
   const [canvasSize, setCanvasSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });

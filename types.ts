@@ -65,8 +65,7 @@ export interface ToolSettings {
   defaultTailBaseWidth: number;
   defaultDotCount: number;
   defaultDotSize: number;
-  uiMode?: 'dark' | 'light';
-  timeOfDay?: 'night' | 'day';
+
 }
 
 export const MIN_BUBBLE_WIDTH = 50;
