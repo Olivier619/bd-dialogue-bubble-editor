@@ -111,9 +111,11 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
 
     // Clean up empty spans or merge? (Optional optimization)
 
-    if (textEditRef.current) onUpdate({ ...bubble, text: textEditRef.current.innerHTML });
+    // DO NOT call onUpdate here. It triggers re-render which breaks selection in some browsers/react versions.
+    // relying on onBlur to sync the text back to state.
+
     return true;
-  }, [isEditingText, onUpdate, bubble]);
+  }, [isEditingText, bubble]);
 
   const enterEditMode = useCallback(() => {
     if (!isEditingText && isSelected) {
@@ -160,12 +162,14 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
         const selection = window.getSelection();
         if (!selection || !textDiv.contains(selection.anchorNode)) return;
 
+        // If no selection (collapsed), resize entire bubble font - this DOES need onUpdate
         if (selection.isCollapsed || selection.rangeCount === 0) {
           const newSize = Math.max(MIN_FONT_SIZE, Math.min(MAX_FONT_SIZE, bubble.fontSize + delta));
           if (newSize !== bubble.fontSize) onUpdate({ ...bubble, fontSize: newSize });
           return;
         }
 
+        // If selection exists, just modify the DOM (no onUpdate)
         let container = selection.getRangeAt(0).startContainer;
         if (container.nodeType === Node.TEXT_NODE) container = container.parentNode!;
         const currentSize = parseInt(window.getComputedStyle(container as Element).fontSize, 10) || bubble.fontSize;
