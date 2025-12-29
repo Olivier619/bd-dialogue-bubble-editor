@@ -530,6 +530,11 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
   const { bodyPath, partsCircles } = useMemo(() => generateBubblePaths(bubble), [bubble]);
   const bbox = useMemo(() => getOverallBbox(bubble), [bubble]);
 
+  // Calculer les paddings dynamiques en fonction du type de bulle
+    const safeZone = SAFE_TEXT_ZONES[bubble.type] || { widthFactor: 0.80, heightFactor: 0.75 };
+    const paddingH = ((1 - safeZone.widthFactor) / 2) * 100;
+    const paddingV = ((1 - safeZone.heightFactor) / 2) * 100;
+
   const bubbleStyle: React.CSSProperties = {
     position: 'absolute',
     left: `${bubble.x}px`,
@@ -539,11 +544,7 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
     zIndex: bubble.zIndex,
     fontFamily: FONT_FAMILY_MAP[bubble.fontFamily],
     fontSize: `${bubble.fontSize}px`,
-        // Calculer les paddings dynamiques en fonction du type de bulle
-    const safeZone = SAFE_TEXT_ZONES[bubble.type] || { widthFactor: 0.80, heightFactor: 0.75 };
-    const paddingH = ((1 - safeZone.widthFactor) / 2) * 100;
-    const paddingV = ((1 - safeZone.heightFactor) / 2) * 100;
-
+        
     color: bubble.textColor,
     border: isSelected ? '2px solid #3b82f6' : '2px solid transparent',
     boxSizing: 'content-box',
