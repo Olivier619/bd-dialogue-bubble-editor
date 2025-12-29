@@ -317,7 +317,7 @@ const App: React.FC = () => {
       });
     }
 
-    // Dessiner le texte
+    // Dessiner le texte en utilisant le rendu riche
     const fontMap: Record<string, string> = {
       'font-comic': 'Comic Neue',
       'font-bangers': 'Bangers',
@@ -326,37 +326,29 @@ const App: React.FC = () => {
       'font-arial': 'Arial',
     };
 
-    ctx.fillStyle = textColor;
-    ctx.font = `${fontSize}px ${fontMap[bubble.fontFamily] || 'Arial'}`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    // Découper le texte en lignes
-    const words = text.split(' ');
-    const lines: string[] = [];
-    let currentLine = '';
-    const maxWidth = width - 20;
-
-    for (const word of words) {
-      const testLine = currentLine + (currentLine ? ' ' : '') + word;
-      const metrics = ctx.measureText(testLine);
-      if (metrics.width > maxWidth && currentLine) {
-        lines.push(currentLine);
-        currentLine = word;
-      } else {
-        currentLine = testLine;
-      }
+    try {
+      const { drawRichText } = await import('./utils/richTextRenderer');
+      await drawRichText(
+        ctx,
+        text, // This text is now HTML
+        x,
+        y,
+        width,
+        height,
+        {
+          fontFamily: bubble.fontFamily,
+          fontSize: bubble.fontSize,
+          textColor: textColor,
+          isBold: false,
+          isItalic: false,
+          isUnderline: false,
+          isStrikethrough: false
+        },
+        fontMap
+      );
+    } catch (e) {
+      console.error("Failed to load or use richTextRenderer", e);
     }
-    if (currentLine) lines.push(currentLine);
-
-    // Dessiner chaque ligne
-    const lineHeight = fontSize * 1.4;
-    const totalHeight = lines.length * lineHeight;
-    const startY = (height - totalHeight) / 2 + lineHeight / 2;
-
-    lines.forEach((line, i) => {
-      ctx.fillText(line, width / 2, startY + i * lineHeight);
-    });
 
     ctx.restore();
   };
