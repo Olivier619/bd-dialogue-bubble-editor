@@ -209,10 +209,11 @@ export async function drawRichText(
 
             const wordWidth = ctx.measureText(word).width;
 
-            // Calculate max width for current line position
+            // Use width directly - it already represents the usable text area
+            // (padding/safe zones are already applied before calling drawRichText)
             const maxLineWidth = getMaxWidthAtY
-                ? getMaxWidthAtY(currentY) - basePadding
-                : width - basePadding;
+                ? getMaxWidthAtY(currentY)
+                : width;
 
             if (currentLine.width + wordWidth > maxLineWidth && currentLine.width > 0) {
                 // New line - update Y position
