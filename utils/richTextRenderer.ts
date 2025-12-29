@@ -215,8 +215,12 @@ export async function drawRichText(
                 ? getMaxWidthAtY(currentY)
                 : width;
 
+            // DEBUG: Log wrapping values
+            console.log(`Word: "${word}", wordWidth: ${wordWidth}, maxLineWidth: ${maxLineWidth}, currentLine.width: ${currentLine.width}`);
+
             if (currentLine.width + wordWidth > maxLineWidth && currentLine.width > 0) {
                 // New line - update Y position
+                console.log(`WRAPPING! Total would be ${currentLine.width + wordWidth} > ${maxLineWidth}`);
                 currentY += currentLine.height || defaultStyle.fontSize * 0.70;
                 lines.push(currentLine);
                 currentLine = { segments: [], width: 0, height: 0 };
