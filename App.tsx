@@ -258,7 +258,7 @@ const App: React.FC = () => {
         // Récupérer le texte actuel
         const bubbleElement = document.querySelector(`[data-bubble-id="${bubble.id}"]`);
         const textElement = bubbleElement?.querySelector('.bubble-text') as HTMLDivElement | null;
-        const currentText = textElement ? textElement.innerText : bubble.text.replace(/<[^>]*>/g, '');
+        const currentText = textElement ? textElement.innerHTML : bubble.text;
 
         // Dessiner la bulle et son contenu
         await drawBubbleToCanvas(ctx, bubble, currentText);
@@ -331,8 +331,8 @@ const App: React.FC = () => {
       await drawRichText(
         ctx,
         text, // This text is now HTML
-        x,
-        y,
+        0, // x is handled by ctx.translate
+        0, // y is handled by ctx.translate
         width,
         height,
         {
