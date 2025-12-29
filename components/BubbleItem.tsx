@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef, useImperativeHandle } from 'react';
 import { Bubble, BubblePart, MIN_BUBBLE_WIDTH, MIN_BUBBLE_HEIGHT, FONT_FAMILY_MAP, BubbleType, FontName, SpeechTailPart, ThoughtDotPart } from '../types.ts';
 import { generateBubblePaths, getOverallBbox } from '../utils/bubbleUtils';
+import { detectTextOverflow, getTextBounds, SAFE_TEXT_ZONES } from '../utils/textAutoFit';
 
 
 interface BubbleItemProps {
@@ -213,6 +214,29 @@ export const BubbleItem = forwardRef<BubbleItemHandle, BubbleItemProps>(({ bubbl
       // Let's add a ref to the main div.
     }
   }, [isSelected, isEditingText, bubble, onUpdate]);
+
+    // Auto-ajustement du texte pour éviter les débordements
+  useEffect(() => {
+    const textDiv = textEditRef.current;
+    if (!textDiv || isEditingText) return;
+
+    const fontFamily = FONT_FAMILY_MAP[bubble.fontFamily];
+    const plainText = textDiv.innerHTML.replace(/<[^>]*>/g, '');
+    
+    // Détecter si le texte déborde
+    const bounds = getTextBounds(bubble);
+    
+    // Mesurer le texte actuel
+    const lineHeight = bubble.fontSize * 1.4;
+    const estimatedLines = Math.ceil(textDiv.scrollHeight / lineHeight);
+    const estimatedHeight = estimatedLines * lineHeight;
+    
+    // Si le texte déborde en hauteur, réduire la taille de police
+    if (estimatedHeight > bounds.height && bubble.fontSize > 8) {
+      const newFontSize = Math.max(8, bubble.fontSize - 1);
+      onUpdate({ ...bubble, fontSize: newFontSize });
+    }
+  }, [bubble.text, bubble.fontSize, bubble.width, bubble.height, bubble.type, isEditingText, onUpdate]);
 
   useEffect(() => {
     const textDiv = textEditRef.current;
