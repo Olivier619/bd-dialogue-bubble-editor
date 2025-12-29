@@ -9,9 +9,9 @@ import { Bubble, BubbleType } from '../types';
 export const SAFE_TEXT_ZONES: Record<BubbleType, { widthFactor: number; heightFactor: number }> = {
   [BubbleType.Shout]: { widthFactor: 0.50, heightFactor: 0.55 },        // Bulles éclair - très prudent
   [BubbleType.Thought]: { widthFactor: 0.50, heightFactor: 0.65 },      // Nuages de pensée
-  [BubbleType.SpeechDown]: { widthFactor: 0.88, heightFactor: 0.83 },   // Dialogue classique
-  [BubbleType.SpeechUp]: { widthFactor: 0.88, heightFactor: 0.83 },     // Dialogue vers le haut
-  [BubbleType.Whisper]: { widthFactor: 0.85, heightFactor: 0.80 },      // Chuchotement
+  [BubbleType.SpeechDown]: { widthFactor: 0.83, heightFactor: 0.83 },  // Dialogue classique
+  [BubbleType.SpeechUp]: { widthFactor: 0.83, heightFactor: 0.83 },    // Dialogue vers le haut
+  [BubbleType.Whisper]: { widthFactor: 0.80, heightFactor: 0.80 },     // Chuchotement
   [BubbleType.Descriptive]: { widthFactor: 0.90, heightFactor: 0.85 },  // Rectangulaire
   [BubbleType.TextOnly]: { widthFactor: 0.95, heightFactor: 0.90 },     // Texte seul - maximum
 };
