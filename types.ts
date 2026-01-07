@@ -68,8 +68,8 @@ export interface ToolSettings {
 
 }
 
-export const MIN_BUBBLE_WIDTH = 50;
-export const MIN_BUBBLE_HEIGHT = 30;
+export const MIN_BUBBLE_WIDTH = 30;
+export const MIN_BUBBLE_HEIGHT = 15;
 
 export const MIN_TAIL_LENGTH = 10;
 export const MIN_TAIL_BASE_WIDTH = 10;
