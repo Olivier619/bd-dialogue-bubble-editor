@@ -469,7 +469,7 @@ return (
 
     <div className="flex flex-1 overflow-hidden">
       {/* Sidebar = 1/3 */}
-      <aside className="w-1/3 max-w-[460px] min-w-[260px] flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300">
+      <aside className="basis-1/3 flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300">
         <Toolbar
           settings={toolSettings}
           onImageUpload={handleImageUpload}
