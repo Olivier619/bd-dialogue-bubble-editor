@@ -4,7 +4,7 @@ import { Toolbar } from './components/Toolbar.tsx';
 
 import { CanvasArea } from './components/CanvasArea.tsx';
 
-import { Bubble, BubblePart, BubbleType, FontName, ToolSettings, MIN_BUBBLE_WIDTH, MIN_BUBBLE_HEIGHT, MIN_TAIL_LENGTH, MIN_TAIL_BASE_WIDTH, MIN_DOT_COUNT, MIN_DOT_SIZE, MIN_BORDER_WIDTH, MAX_BORDER_WIDTH, BUBBLE_REQUIRES_PARTS, SpeechTailPart, ThoughtDotPart } from './types.ts';
+import { Bubble, BubblePart, BubbleType, FontName, ToolSettings, MIN_BUBBLE_WIDTH, MIN_BUBBLE_HEIGHT, MIN_TAIL_LENGTH, MIN_TAIL_BASE_WIDTH, MIN_DOT_COUNT, MIN_DOT_SIZE, MIN_BORDER_WIDTH, MAX_BORDER_WI[...]
 
 import { BubbleItemHandle } from './components/BubbleItem.tsx';
 
@@ -284,7 +284,7 @@ const App: React.FC = () => {
         img.onerror = reject;
       });
 
-      ctx.drawImage(img, 0, 0, canvasSize.width, canvasSize.height);
+      ctx.drawImage(img, 0, canvasSize.width, canvasSize.height);
 
       for (const bubble of bubblesRef.current.sort((a, b) => a.zIndex - b.zIndex)) {
         const bubbleElement = document.querySelector(`[data-bubble-id="${bubble.id}"]`);
@@ -469,7 +469,7 @@ return (
 
     <div className="flex flex-1 overflow-hidden">
       {/* Sidebar = 1/3 */}
-      <aside className="basis-1/3 flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300">
+      <aside className="w-1/3 flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300 min-w-0">
         <Toolbar
           settings={toolSettings}
           onImageUpload={handleImageUpload}
@@ -493,7 +493,7 @@ return (
             <li><span className="font-semibold">Glissez</span> une bulle sélectionnée pour la déplacer.</li>
             <li><span className="font-semibold">Glissez les poignées bleues</span> pour redimensionner.</li>
             <li><span className="font-semibold">Poignées Orange/Violette</span> sur la queue pour l'ajuster (pointe et base).</li>
-            <li><span className="font-semibold">Cliquez dans le texte</span> pour éditer. <span className="font-semibold">Molette souris</span> pour changer la taille (sélectionnez une partie pour redimensionner localement).</li>
+            <li><span className="font-semibold">Cliquez dans le texte</span> pour éditer. <span className="font-semibold">Molette souris</span> pour changer la taille (sélectionnez une partie pour r[...]
             <li><span className="font-semibold">Double-cliquez sur la bordure</span> d'une bulle pour la supprimer.</li>
             <li><span className="font-semibold">Sauvegardez</span> le projet (.json) ou <span className="font-semibold">Exportez</span> en PNG/JPG.</li>
           </ol>
@@ -501,7 +501,7 @@ return (
       </aside>
 
       {/* Canvas = 2/3 */}
-      <main className="w-2/3 flex-1 flex justify-center items-start p-6 overflow-auto bg-gray-300">
+      <main className="w-2/3 flex-shrink-0 flex justify-center items-start p-6 overflow-auto bg-gray-300 min-w-0">
         <CanvasArea
           ref={canvasAreaRef}
           image={uploadedImage}
