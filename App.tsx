@@ -459,64 +459,66 @@ const App: React.FC = () => {
     reader.readAsText(file);
   }, []);
 
-  return (
-    <div className="flex flex-col h-screen bg-gray-200">
-      <header className="bg-white shadow-md z-10 flex-shrink-0">
-        <h1 className="text-2xl sm:text-3xl font-bold py-3 text-center text-gray-800 font-Bangers tracking-wide">
-          Éditeur de Bulles de Dialogue
-        </h1>
-      </header>
+return (
+  <div className="flex flex-col h-screen bg-gray-200">
+    <header className="bg-white shadow-md z-10 flex-shrink-0">
+      <h1 className="text-2xl sm:text-3xl font-bold py-3 text-center text-gray-800 font-Bangers tracking-wide">
+        Éditeur de Bulles de Dialogue
+      </h1>
+    </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        <aside className="w-420px flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300">
-          <Toolbar
-            settings={toolSettings}
-            onImageUpload={handleImageUpload}
-            onSave={handleSaveImage}
-            isSaving={isSaving}
-            onClear={handleClearAll}
-            onSettingChange={handleUpdateToolSettings}
-            selectedBubble={bubbles.find(b => b.id === selectedBubbleId) || null}
-            onSaveProject={handleSaveProject}
-            onLoadProject={handleLoadProject}
-            isProjectLoaded={!!uploadedImage}
-          />
+    <div className="flex flex-1 overflow-hidden">
+      {/* Sidebar = 1/3 */}
+      <aside className="w-1/3 max-w-[460px] min-w-[260px] flex-shrink-0 overflow-y-auto p-4 bg-gray-50 border-r border-gray-300">
+        <Toolbar
+          settings={toolSettings}
+          onImageUpload={handleImageUpload}
+          onSave={handleSaveImage}
+          isSaving={isSaving}
+          onClear={handleClearAll}
+          onSettingChange={handleUpdateToolSettings}
+          selectedBubble={bubbles.find(b => b.id === selectedBubbleId) || null}
+          onSaveProject={handleSaveProject}
+          onLoadProject={handleLoadProject}
+          isProjectLoaded={!!uploadedImage}
+        />
 
-          <div className="mt-6 p-4 border border-yellow-300 rounded bg-yellow-50 text-yellow-700 text-sm">
-            <h2 className="text-lg font-semibold mb-2 font-Bangers">Instructions Rapides</h2>
-            <ol className="list-decimal pl-5 space-y-1">
-              <li><span className="font-semibold">Téléchargez</span> votre planche ou <span className="font-semibold">Ouvrez</span> un projet existant.</li>
-              <li><span className="font-semibold">Sélectionnez</span> type de bulle et options (police, taille texte, couleurs, etc...).</li>
-              <li><span className="font-semibold">Cliquez sur l'image</span> pour placer une bulle.</li>
-              <li><span className="font-semibold">Cliquez sur une bulle</span> pour la sélectionner (bordure bleue).</li>
-              <li><span className="font-semibold">Glissez</span> une bulle sélectionnée pour la déplacer.</li>
-              <li><span className="font-semibold">Glissez les poignées bleues</span> pour redimensionner.</li>
-              <li><span className="font-semibold">Poignées Orange/Violette</span> sur la queue pour l'ajuster (pointe et base).</li>
-              <li><span className="font-semibold">Cliquez dans le texte</span> pour éditer. <span className="font-semibold">Molette souris</span> pour changer la taille (sélectionnez une partie pour redimensionner localement).</li>
-              <li><span className="font-semibold">Double-cliquez sur la bordure</span> d'une bulle pour la supprimer.</li>
-              <li><span className="font-semibold">Sauvegardez</span> le projet (.json) ou <span className="font-semibold">Exportez</span> en PNG/JPG.</li>
-            </ol>
-          </div>
-        </aside>
+        <div className="mt-6 p-4 border border-yellow-300 rounded bg-yellow-50 text-yellow-700 text-sm">
+          <h2 className="text-lg font-semibold mb-2 font-Bangers">Instructions Rapides</h2>
+          <ol className="list-decimal pl-5 space-y-1">
+            <li><span className="font-semibold">Téléchargez</span> votre planche ou <span className="font-semibold">Ouvrez</span> un projet existant.</li>
+            <li><span className="font-semibold">Sélectionnez</span> type de bulle et options (police, taille texte, couleurs, etc...).</li>
+            <li><span className="font-semibold">Cliquez sur l'image</span> pour placer une bulle.</li>
+            <li><span className="font-semibold">Cliquez sur une bulle</span> pour la sélectionner (bordure bleue).</li>
+            <li><span className="font-semibold">Glissez</span> une bulle sélectionnée pour la déplacer.</li>
+            <li><span className="font-semibold">Glissez les poignées bleues</span> pour redimensionner.</li>
+            <li><span className="font-semibold">Poignées Orange/Violette</span> sur la queue pour l'ajuster (pointe et base).</li>
+            <li><span className="font-semibold">Cliquez dans le texte</span> pour éditer. <span className="font-semibold">Molette souris</span> pour changer la taille (sélectionnez une partie pour redimensionner localement).</li>
+            <li><span className="font-semibold">Double-cliquez sur la bordure</span> d'une bulle pour la supprimer.</li>
+            <li><span className="font-semibold">Sauvegardez</span> le projet (.json) ou <span className="font-semibold">Exportez</span> en PNG/JPG.</li>
+          </ol>
+        </div>
+      </aside>
 
-        <main className="flex-1 flex justify-center items-start p-6 overflow-auto bg-gray-300">
-          <CanvasArea
-            ref={canvasAreaRef}
-            image={uploadedImage}
-            bubbles={bubbles}
-            selectedBubbleId={selectedBubbleId}
-            onAddBubble={handleAddBubble}
-            onSelectBubble={handleSelectBubble}
-            onUpdateBubble={handleUpdateBubble}
-            onDeleteBubble={handleDeleteBubble}
-            isSaving={isSaving}
-            canvasSize={canvasSize}
-            selectedBubbleRef={selectedBubbleRef}
-          />
-        </main>
-      </div>
+      {/* Canvas = 2/3 */}
+      <main className="w-2/3 flex-1 flex justify-center items-start p-6 overflow-auto bg-gray-300">
+        <CanvasArea
+          ref={canvasAreaRef}
+          image={uploadedImage}
+          bubbles={bubbles}
+          selectedBubbleId={selectedBubbleId}
+          onAddBubble={handleAddBubble}
+          onSelectBubble={handleSelectBubble}
+          onUpdateBubble={handleUpdateBubble}
+          onDeleteBubble={handleDeleteBubble}
+          isSaving={isSaving}
+          canvasSize={canvasSize}
+          selectedBubbleRef={selectedBubbleRef}
+        />
+      </main>
     </div>
-  );
-};
+  </div>
+);
+
 
 export default App;
