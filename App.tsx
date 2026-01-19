@@ -4,7 +4,7 @@ import { Toolbar } from './components/Toolbar.tsx';
 
 import { CanvasArea } from './components/CanvasArea.tsx';
 
-import { Bubble, BubblePart, BubbleType, FontName, ToolSettings, MIN_BUBBLE_WIDTH, MIN_BUBBLE_HEIGHT, MIN_TAIL_LENGTH, MIN_TAIL_BASE_WIDTH, MIN_DOT_COUNT, MIN_DOT_SIZE, MIN_BORDER_WIDTH, MAX_BORDER_WI[...]
+import { Bubble, BubblePart, BubbleType, FontName, ToolSettings, MIN_BUBBLE_WIDTH, MIN_BUBBLE_HEIGHT, MIN_TAIL_LENGTH, MIN_TAIL_BASE_WIDTH, MIN_DOT_COUNT, MIN_DOT_SIZE, MIN_BORDER_WIDTH, MAX_BORDER_WI}
 
 import { BubbleItemHandle } from './components/BubbleItem.tsx';
 
